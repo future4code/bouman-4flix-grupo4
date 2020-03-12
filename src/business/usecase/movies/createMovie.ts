@@ -15,7 +15,7 @@ export class CreateMovieUC {
     const movie = new Movie(
       id,
       input.title,
-      input.date,
+      new Date(input.date),
       input.length,
       input.synopsis,
       input.link,
