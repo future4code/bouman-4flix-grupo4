@@ -1,7 +1,8 @@
 import { BaseDB } from "./baseDB";
 import { Movie } from "../business/entities/movie";
+import { MoviesGateway } from "../business/gateways/moviesGateway";
 
-export class MovieDB extends BaseDB {
+export class MovieDB extends BaseDB implements MoviesGateway {
   private movieTableName = "MOVIES_TABLE";
 
   private mapDateToDbDate(input: Date): string {
@@ -15,14 +16,14 @@ export class MovieDB extends BaseDB {
     return new Date(input);
   }
 
-  private mapDbUserToUser(input?: any): Movie | undefined {
+  private mapDbMovieToMovie(input?: any): Movie | undefined {
     return (
       input &&
       new Movie(
         input.id,
         input.title,
+        this.mapDbDateToDate(input.date),
         input.length,
-        this.mapDbDateToDate(input.date),//todo: verificar esse erro 
         input.synopsis,
         input.link,
         input.picture
