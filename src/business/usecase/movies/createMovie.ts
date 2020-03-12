@@ -1,5 +1,7 @@
 import { v4 } from "uuid";
 import { Movie } from "../../entities/movie";
+import { MovieDB } from "../../../data/movieDB";
+
 
 export class CreateMovieUC {
   constructor(private db: MovieDB) {}
