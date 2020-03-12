@@ -1,5 +1,6 @@
 import { v4 } from "uuid";
 import { Series } from "../../entities/series";
+import { Episode } from "../../entities/episode";
 
 export class CreateSeriesUC {
   constructor(private db: SeriesDB) {}
@@ -12,7 +13,8 @@ export class CreateSeriesUC {
           input.title,
           input.date,
           input.synopsis,
-          input.picture
+          input.picture,
+          input.episodes
       )
 
       await this.db.createSeries(series)
@@ -28,6 +30,7 @@ export interface CreateSeriesUCInput {
   date: Date;
   synopsis: string;
   picture: string;
+  episodes: Episode[];
 }
 
 export interface CreateSeriesUCOutput {

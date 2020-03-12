@@ -1,10 +1,13 @@
+import { Episode } from "./episode";
+
 export class Series {
   constructor(
     private id: string,
     private title: string,
     private date: Date,
     private synopsis: string,
-    private picture: string
+    private picture: string,
+    private episodes: Episode[]
   ) {}
 
   public getId(): string {
@@ -45,5 +48,13 @@ export class Series {
 
   public setPicture(picture: string): void {
     this.picture = picture;
+  }
+
+  public getEpisodes(): Episode[] {
+    return this.episodes;
+  }
+
+  public setEpisodes(episodes: Episode[]): void {
+    this.episodes = episodes;
   }
 }
