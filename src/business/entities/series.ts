@@ -6,6 +6,7 @@ export class Series {
     private title: string,
     private date: Date,
     private synopsis: string,
+    private link: string,
     private picture: string,
     private episodes: Episode[]
   ) {}
@@ -40,6 +41,14 @@ export class Series {
 
   public setSynopsis(synopsis: string): void {
     this.synopsis = synopsis;
+  }
+
+  public getLink(): string {
+    return this.link;
+  }
+
+  public setLink(link: string): void {
+    this.link = link;
   }
 
   public getPicture(): string {
