@@ -36,7 +36,7 @@ export interface CreateSeriesUCInput {
   synopsis: string;
   link: string;
   picture: string;
-  episodes: CreateEpisodeUCInput[];
+  episodes: Episode[];
 }
 
 export interface CreateEpisodeUCInput {
