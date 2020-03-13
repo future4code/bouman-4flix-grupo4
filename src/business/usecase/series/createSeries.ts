@@ -21,16 +21,7 @@ export class CreateSeriesUC {
     await this.db.createSeries(series)
 
     for (let ep of input.episodes) {
-      const newEpisodeId = v4();
-      const episode = new Episode(
-        newEpisodeId,
-        ep.title,
-        ep.length,
-        ep.link,
-        ep.picture,
-        ep.synopsis
-      );
-      await this.db.createEpisode(episode, id);
+      
     }
 
     return {
