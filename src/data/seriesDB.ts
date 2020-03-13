@@ -1,8 +1,9 @@
 import { BaseDB } from "./baseDB";
 import { Series } from "../business/entities/series";
 import { Episode } from "../business/entities/episode";
+import { SeriesGateway } from "../business/gateways/seriesGateway";
 
-export class SeriesDB extends BaseDB {
+export class SeriesDB extends BaseDB implements SeriesGateway {
   private seriesTableName = "SERIES_TABLE";
   private episodeTableName = "EPISODES_TABLE"
 
@@ -15,6 +16,21 @@ export class SeriesDB extends BaseDB {
 
   private mapDbDateToDate(input: string): Date {
     return new Date(input);
+  }
+
+  private mapDbSerieToSerie(input?: any): Series | undefined {
+    return (
+      input &&
+      new Series(
+        input.id,
+        input.title,
+        this.mapDbDateToDate(input.date),
+        input.synopsis,
+        input.link,
+        input.picture,
+        input.episodes
+      )
+    );
   }
 
   public async createSeries(series: Series): Promise<void> {
@@ -63,5 +79,13 @@ export class SeriesDB extends BaseDB {
         );`;
 
     await this.connection.raw(query);
+  }
+
+  public async getSerieById(id:string): Promise<Series | undefined>{
+    const result = await this.connection.raw(`
+      SELECT * FROM ${this.seriesTableName} WHERE id='${id}'
+    `)
+
+    return this.mapDbSerieToSerie(result[0][0])
   }
 }
