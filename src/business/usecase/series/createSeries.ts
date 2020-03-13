@@ -21,13 +21,17 @@ export class CreateSeriesUC {
 
     await this.db.createSeries(series)
 
-    input.episodes.forEach(async episode => { // Por que isso não funciona?
-      await this.db.createEpisode(episode, id)
-    })
+    // input.episodes.forEach(async episode => { // Por que isso não funciona?
+    //   await this.db.createEpisode(episode, id)
+    // })
 
-    return {
-      message: `${JSON.stringify(input.episodes.map(episode => {return episode}))}` // "Testando" no back
+    for (let episode of input.episodes) {
+      await this.db.createEpisode(episode, id)
     }
+
+      return {
+        message: "Series created succesfully"
+      }
   }
 }
 
