@@ -61,4 +61,11 @@ export class MovieDB extends BaseDB implements MoviesGateway {
 
     await this.connection.raw(query);
   }
+
+  public async getMovieById(id: string): Promise<Movie | undefined>{
+    const result = await this.connection.raw(`
+      SELECT * FROM ${this.movieTableName} WHERE id='${id}'
+    `)
+    return this.mapDbMovieToMovie(result[0][0])
+  }
 }
