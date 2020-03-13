@@ -5,7 +5,8 @@ export class Episode {
     private length: number,
     private link: string,
     private picture: string,
-    private synopsis: string
+    private synopsis: string,
+    private series_id: string,
   ) { }
 
   public getId(): string {
@@ -54,5 +55,9 @@ export class Episode {
 
   public setSynopsis(synopsis: string): void {
     this.synopsis = synopsis;
+  }
+
+  public getSeriesId(): string {
+    return this.series_id;
   }
 }
