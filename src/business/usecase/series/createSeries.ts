@@ -15,23 +15,27 @@ export class CreateSeriesUC {
       new Date(input.date),
       input.synopsis,
       input.link,
-      input.picture,
-      input.episodes
+      input.picture
     )
 
     await this.db.createSeries(series)
 
-    // input.episodes.forEach(async episode => { // Por que isso não funciona?
-    //   await this.db.createEpisode(episode, id)
-    // })
-
-    for (let episode of input.episodes) {
-      await this.db.createEpisode(episode, id)
+    for (let ep of input.episodes) {
+      const newEpisodeId = v4();
+      const episode = new Episode(
+        newEpisodeId,
+        ep.title,
+        ep.length,
+        ep.link,
+        ep.picture,
+        ep.synopsis
+      );
+      await this.db.createEpisode(episode, id);
     }
 
-      return {
-        message: "Series created succesfully"
-      }
+    return {
+      message: "Series created succesfully"
+    }
   }
 }
 
@@ -41,7 +45,15 @@ export interface CreateSeriesUCInput {
   synopsis: string;
   link: string;
   picture: string;
-  episodes: Episode[];
+  episodes: CreateEpisodeUCInput[];
+}
+
+export interface CreateEpisodeUCInput {
+  title: string
+  length: number
+  link: string
+  picture: string
+  synopsis: string
 }
 
 export interface CreateSeriesUCOutput {
