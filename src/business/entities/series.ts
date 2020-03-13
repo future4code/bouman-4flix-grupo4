@@ -5,7 +5,11 @@ export class Series {
     private date: Date,
     private synopsis: string,
     private link: string,
-    private picture: string
+    private picture: string,
+    private episodes: Episode[]
+
+  
+
   ) {}
 
   public getId(): string {
@@ -54,5 +58,9 @@ export class Series {
 
   public setPicture(picture: string): void {
     this.picture = picture;
+  }
+
+  public getLink(): string {
+     return this.link;
   }
 }
