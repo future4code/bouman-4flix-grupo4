@@ -18,6 +18,21 @@ export class SeriesDB extends BaseDB implements SeriesGateway {
     return new Date(input);
   }
 
+  private mapDbSerieToSerie(input?: any): Series | undefined {
+    return (
+      input &&
+      new Series(
+        input.id,
+        input.title,
+        this.mapDbDateToDate(input.date),
+        input.synopsis,
+        input.link,
+        input.picture,
+        input.episodes
+      )
+    );
+  }
+
   public async createSeries(series: Series): Promise<void> {
     let query = series.getPicture()
       ? `INSERT INTO ${this.seriesTableName} (id, title, date, synopsis, link, picture)
@@ -64,5 +79,13 @@ export class SeriesDB extends BaseDB implements SeriesGateway {
         );`;
 
     await this.connection.raw(query);
+  }
+
+  public async getSerieById(id:string): Promise<Series | undefined>{
+    const result = await this.connection.raw(`
+      SELECT * FROM ${this.seriesTableName} WHERE id='${id}'
+    `)
+
+    return this.mapDbSerieToSerie(result[0][0])
   }
 }

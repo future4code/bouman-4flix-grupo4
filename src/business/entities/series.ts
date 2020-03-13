@@ -1,3 +1,6 @@
+import { Episode } from "./episode";
+import { GetSeriesUCOutputEpisode } from "../usecase/series/getSerieById"
+
 export class Series {
   constructor(
     private id: string,
@@ -5,7 +8,8 @@ export class Series {
     private date: Date,
     private synopsis: string,
     private link: string,
-    private picture: string
+    private picture: string,
+    private episodes: Episode[]
   ) {}
 
   public getId(): string {
@@ -54,5 +58,13 @@ export class Series {
 
   public setPicture(picture: string): void {
     this.picture = picture;
+  }
+
+  public getEpisodes(): Episode[] {
+    return this.episodes;
+  }
+
+  public setEpisodes(episodes: Episode[]): void {
+    this.episodes = episodes;
   }
 }
