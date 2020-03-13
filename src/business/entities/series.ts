@@ -1,3 +1,5 @@
+import { Episode } from "./episode";
+
 export class Series {
   constructor(
     private id: string,
