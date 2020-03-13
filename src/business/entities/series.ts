@@ -7,9 +7,6 @@ export class Series {
     private link: string,
     private picture: string,
     private episodes: Episode[]
-
-  
-
   ) {}
 
   public getId(): string {
@@ -60,7 +57,11 @@ export class Series {
     this.picture = picture;
   }
 
-  public getEpisode(): Episode[]{
-    return this.episodes
+  public getEpisodes(): Episode[] {
+    return this.episodes;
+  }
+
+  public setEpisodes(episodes: Episode[]): void {
+    this.episodes = episodes;
   }
 }
