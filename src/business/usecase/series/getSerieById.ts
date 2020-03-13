@@ -1,5 +1,3 @@
-import { Series } from "../../entities/series";
-import { Episode } from "../../entities/episode";
 import { SeriesGateway } from "../../gateways/seriesGateway";
 
 export class GetSerieByIdUC {
@@ -20,7 +18,8 @@ export class GetSerieByIdUC {
       date: serie.getDate(),
       synopsis: serie.getSynopsis(),
       link: serie.getLink(),
-      picture: serie.getPicture()
+      picture: serie.getPicture(),
+      episodes: serie.getEpisodes()
     };
   }
 }
@@ -36,4 +35,14 @@ export interface GetSerieByIdUCOutput {
   synopsis: string;
   link: string;
   picture: string;
+  episodes: GetSeriesUCOutputEpisode[];
+}
+
+export interface GetSeriesUCOutputEpisode {
+  title: string;
+  length: number;
+  link: string;
+  picture: string;
+  synopsis: string;
+  series_id: string
 }
