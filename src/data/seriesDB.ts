@@ -1,8 +1,9 @@
 import { BaseDB } from "./baseDB";
 import { Series } from "../business/entities/series";
 import { Episode } from "../business/entities/episode";
+import { SeriesGateway } from "../business/gateways/seriesGateway";
 
-export class SeriesDB extends BaseDB {
+export class SeriesDB extends BaseDB implements SeriesGateway {
   private seriesTableName = "SERIES_TABLE";
   private episodeTableName = "EPISODES_TABLE"
 

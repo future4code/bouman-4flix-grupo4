@@ -1,10 +1,11 @@
-import { SeriesDB } from "../../../data/seriesDB";
+import { SeriesGateway } from "../../gateways/seriesGateway";
 import { v4 } from "uuid";
 import { Series } from "../../entities/series";
 import { Episode } from "../../entities/episode";
 
+
 export class CreateSeriesUC {
-  constructor(private db: SeriesDB) { }
+  constructor(private seriesGateway: SeriesGateway) { }
 
   public async execute(input: CreateSeriesUCInput): Promise<CreateSeriesUCOutput> {
     const id = v4()
@@ -18,7 +19,7 @@ export class CreateSeriesUC {
       input.picture
     )
 
-    await this.db.createSeries(series)
+    await this.seriesGateway.createSeries(series)
 
     for (let ep of input.episodes) {
       const newEpisodeId = v4();
@@ -30,11 +31,11 @@ export class CreateSeriesUC {
         ep.picture,
         ep.synopsis
       );
-      await this.db.createEpisode(episode, id);
+      await this.seriesGateway.createEpisode(episode, id);
     }
 
     return {
-      message: "Series created succesfully"
+      message: "Series created successfully"
     }
   }
 }
