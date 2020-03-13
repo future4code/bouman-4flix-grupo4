@@ -1,4 +1,5 @@
 import { Episode } from "./episode";
+import { GetSeriesUCOutputEpisode } from "../usecase/series/getSerieById"
 
 export class Series {
   constructor(
