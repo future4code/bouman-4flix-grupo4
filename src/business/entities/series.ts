@@ -60,7 +60,7 @@ export class Series {
     this.picture = picture;
   }
 
-  public getLink(): string {
-     return this.link;
+  public getEpisode(): Episode[]{
+    return this.episodes
   }
 }
