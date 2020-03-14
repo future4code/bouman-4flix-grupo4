@@ -7,7 +7,7 @@ export class Movie {
     private synopsis: string,
     private link: string,
     private picture: string
-  ) {}
+  ) { }
 
   public getId(): string {
     return this.id;

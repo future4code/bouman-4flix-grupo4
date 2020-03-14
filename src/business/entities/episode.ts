@@ -5,7 +5,7 @@ export class Episode {
     private length: number,
     private link: string,
     private picture: string,
-    private synopsis: string
+    private synopsis: string,
   ) { }
 
   public getId(): string {

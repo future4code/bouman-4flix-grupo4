@@ -2,7 +2,7 @@ import { MoviesGateway } from "../../gateways/moviesGateway";
 import { Movie } from "../../entities/movie";
 
 export class GetMovieByIdUC {
-  constructor(private moviesGateway: MoviesGateway) {}
+  constructor(private moviesGateway: MoviesGateway) { }
 
   public async execute(
     input: GetMovieByIdUCInput

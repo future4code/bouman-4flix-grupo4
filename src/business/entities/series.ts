@@ -1,5 +1,4 @@
 import { Episode } from "./episode";
-import { GetSeriesUCOutputEpisode } from "../usecase/series/getSerieById"
 
 export class Series {
   constructor(
@@ -9,8 +8,8 @@ export class Series {
     private synopsis: string,
     private link: string,
     private picture: string,
-    private episodes: Episode[]
-  ) {}
+    private episodes: Episode[],
+  ) { }
 
   public getId(): string {
     return this.id;

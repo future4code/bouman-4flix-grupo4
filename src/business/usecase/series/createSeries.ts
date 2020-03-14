@@ -1,14 +1,26 @@
 import { SeriesGateway } from "../../gateways/seriesGateway";
+<<<<<<< HEAD
+=======
+import { EpisodesGateway } from "../../gateways/episodesGateway";
+>>>>>>> 213ba68b5a10be7d6d4d6a25d120c71e5d8e2ad9
 import { v4 } from "uuid";
 import { Series } from "../../entities/series";
 import { Episode } from "../../entities/episode";
 
 
 export class CreateSeriesUC {
+<<<<<<< HEAD
   constructor(private seriesGateway: SeriesGateway) { }
+=======
+  constructor(
+    private seriesGateway: SeriesGateway,
+    private episodesGateway: EpisodesGateway,
+  ) { }
+>>>>>>> 213ba68b5a10be7d6d4d6a25d120c71e5d8e2ad9
 
   public async execute(input: CreateSeriesUCInput): Promise<CreateSeriesUCOutput> {
     const id = v4()
+    const episodesArray: Episode[] = []
 
     const series = new Series(
       id,
@@ -16,10 +28,17 @@ export class CreateSeriesUC {
       new Date(input.date),
       input.synopsis,
       input.link,
-      input.picture
+      input.picture,
+      episodesArray
     )
 
     await this.seriesGateway.createSeries(series)
+<<<<<<< HEAD
+=======
+    // DÚVIDA: Esse método tem de ser invocado antes do método createEpisode(), da linha 42,
+    // para criar a série, que tem o id que será referenciado pela foreign key dos episódios.
+    // Isso confere? O endpoint só funcionou depois que eu fiz essa troca de posições.
+>>>>>>> 213ba68b5a10be7d6d4d6a25d120c71e5d8e2ad9
 
     for (let ep of input.episodes) {
       const newEpisodeId = v4();
@@ -31,7 +50,12 @@ export class CreateSeriesUC {
         ep.picture,
         ep.synopsis
       );
+<<<<<<< HEAD
       await this.seriesGateway.createEpisode(episode, id);
+=======
+      await this.episodesGateway.createEpisode(episode, id);
+      episodesArray.push(episode)
+>>>>>>> 213ba68b5a10be7d6d4d6a25d120c71e5d8e2ad9
     }
 
     return {

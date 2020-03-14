@@ -5,7 +5,7 @@ import { SeriesGateway } from "../business/gateways/seriesGateway";
 
 export class SeriesDB extends BaseDB implements SeriesGateway {
   private seriesTableName = "SERIES_TABLE";
-  private episodeTableName = "EPISODES_TABLE"
+  
 
   private mapDateToDbDate(input: Date): string {
     const year = input.getFullYear();
@@ -18,7 +18,7 @@ export class SeriesDB extends BaseDB implements SeriesGateway {
     return new Date(input);
   }
 
-  private mapDbSerieToSerie(input?: any): Series | undefined {
+  private mapDbSeriesToSeries(input?: any): Series | undefined {
     return (
       input &&
       new Series(
@@ -56,36 +56,13 @@ export class SeriesDB extends BaseDB implements SeriesGateway {
     await this.connection.raw(query);
   }
 
-  public async createEpisode(episode: Episode, id: string): Promise<void> {
-    let query = episode.getPicture()
-      ? `INSERT INTO ${this.episodeTableName} (id, title, length, link, picture, synopsis, series_id)
-        VALUES(
-          '${episode.getId()}',
-          '${episode.getTitle()}',
-          '${episode.getLength()}',
-          '${episode.getLink()}',
-          '${episode.getPicture()}',
-          '${episode.getSynopsis()}',
-          '${id}'
-        );`
-      : `INSERT INTO ${this.episodeTableName} (id, title, length, link, synopsis, series_id)
-        VALUES(
-          '${episode.getId()}',
-          '${episode.getTitle()}',
-          '${episode.getLength()}',
-          '${episode.getLink()}',
-          '${episode.getSynopsis()}',
-          '${id}'
-        );`;
 
-    await this.connection.raw(query);
-  }
 
-  public async getSerieById(id:string): Promise<Series | undefined>{
+  public async getSeriesById(id:string): Promise<Series | undefined>{
     const result = await this.connection.raw(`
       SELECT * FROM ${this.seriesTableName} WHERE id='${id}'
     `)
 
-    return this.mapDbSerieToSerie(result[0][0])
+    return this.mapDbSeriesToSeries(result[0][0])
   }
 }
