@@ -1,27 +1,36 @@
 import { MoviesGateway } from '../gateways/moviesGateway'
 import { SeriesGateway } from '../gateways/seriesGateway'
 
-export class searchMovieOrSeriesUC {
+export class SearchMoviesOrSeriesUC {
   constructor(
     private moviesGateway: MoviesGateway,
     private seriesGateway: SeriesGateway,
   ) { }
 
-  public async execute(input: searchMovieOrSeriesUCInput): Promise<searchMovieOrSeriesUCOutput> {
-    await this.moviesGateway.createMovie(input)
-    await this.seriesGateway.createSeries(input)
-    return {
-      message: "Series created successfully"
+  public async execute(input: searchUCInput): Promise<searchUCOutput> {
+
+    if (input.query.length > 0) {
+      await this.moviesGateway.searchMovie(input)
+      const teste = await this.seriesGateway.searchSeries(input) // Continuar aqui!
+
+      return {
+        message: teste
+      }
+
+    } else {
+      return {
+        message: "Enter a search term"
+      }
     }
   }
 }
 
-export interface searchMovieOrSeriesUCInput {
+export interface searchUCInput {
   query: string
-  minLength: number,
-  maxLength: number
+  minLength?: number,
+  maxLength?: number
 }
 
-export interface searchMovieOrSeriesUCOutput {
-  message: string;
+export interface searchUCOutput {
+  message: string | any; // Mudar aqui!
 } 

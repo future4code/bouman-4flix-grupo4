@@ -1,6 +1,7 @@
 import { BaseDB } from "./baseDB";
 import { Movie } from "../business/entities/movie";
 import { MoviesGateway } from "../business/gateways/moviesGateway";
+import { searchUCInput } from "../business/usecase/searchMoviesOrSeries";
 
 export class MovieDB extends BaseDB implements MoviesGateway {
   private movieTableName = "MOVIES_TABLE";
@@ -67,5 +68,15 @@ export class MovieDB extends BaseDB implements MoviesGateway {
       SELECT * FROM ${this.movieTableName} WHERE id='${id}'
     `)
     return this.mapDbMovieToMovie(result[0][0])
+  }
+
+  public async searchMovie(input: searchUCInput): Promise<Movie | undefined> {
+    const result = await this.connection.raw(`
+      SELECT * FROM ${this.movieTableName}
+      WHERE title LIKE '%${input.query}%'
+      OR synopsis LIKE '%${input.query}%';
+    `)
+
+    return result[0][0]
   }
 }
