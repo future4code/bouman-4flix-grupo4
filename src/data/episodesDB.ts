@@ -15,7 +15,6 @@ export class EpisodesDB extends BaseDB implements EpisodesGateway {
         input.link,
         input.picture,
         input.synopsis,
-        input.series_id,
       )
     );
   }
@@ -49,7 +48,7 @@ export class EpisodesDB extends BaseDB implements EpisodesGateway {
     await this.connection.raw(query);
   }
 
-  public async getAllEpisodesBySerieId(series_id:string): Promise<Episode[]>{
+  public async getAllEpisodesBySeriesId(series_id:string): Promise<Episode[]>{
       const result = await this.connection.raw(`
         SELECT * FROM ${this.episodeTableName} WHERE series_id='${series_id}'
       `)

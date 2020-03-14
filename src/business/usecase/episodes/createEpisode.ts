@@ -1,10 +1,9 @@
-import { EpisodesDB } from "../../../data/episodesDB";
+import { EpisodesGateway } from "../../gateways/episodesGateway";
 import { v4 } from "uuid";
 import { Episode } from "../../entities/episode";
-import { EpisodesGateway } from "../../gateways/episodesGateway";
 
 export class CreateEpisodeUC {
-  constructor(private episodesGateway: EpisodesGateway) {}
+  constructor(private episodesGateway: EpisodesGateway) { }
 
   public async execute(input: CreateEpisodeUCInput): Promise<void> {
     const id = v4();
@@ -16,7 +15,6 @@ export class CreateEpisodeUC {
       input.link,
       input.picture,
       input.synopsis,
-      input.series_id
     );
 
     await this.episodesGateway.createEpisode(episode, id);
@@ -31,5 +29,3 @@ export interface CreateEpisodeUCInput {
   synopsis: string;
   series_id: string;
 }
-
-

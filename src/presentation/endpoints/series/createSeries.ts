@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { CreateSeriesUC } from "../../../business/usecase/series/createSeries";
 import { SeriesDB } from "../../../data/seriesDB";
+import { EpisodesDB } from "../../../data/episodesDB";
 
 export const createSeriesEndpoint = async (req: Request, res: Response) => {
   try {
-    const createSeriesUC = new CreateSeriesUC(new SeriesDB());
+    const createSeriesUC = new CreateSeriesUC(new SeriesDB(), new EpisodesDB());
     const result = await createSeriesUC.execute({
       title: req.body.title,
       date: req.body.date,

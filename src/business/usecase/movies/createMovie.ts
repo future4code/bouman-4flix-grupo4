@@ -1,11 +1,10 @@
 import { v4 } from "uuid";
 import { Movie } from "../../entities/movie";
-import { MovieDB } from "../../../data/movieDB";
 import { MoviesGateway } from "../../gateways/moviesGateway"
 
 
 export class CreateMovieUC {
-  constructor(private moviesGateway: MoviesGateway) {}
+  constructor(private moviesGateway: MoviesGateway) { }
 
   public async execute(
     input: CreateMovieUCInput
@@ -24,8 +23,8 @@ export class CreateMovieUC {
 
     await this.moviesGateway.createMovie(movie)
 
-    return{
-        message: "Movie created Successfully"
+    return {
+      message: "Movie created successfully"
     }
   }
 }

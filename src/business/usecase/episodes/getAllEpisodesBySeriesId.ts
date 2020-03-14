@@ -1,13 +1,13 @@
 import { Episode } from "../../entities/episode";
 import { EpisodesGateway } from "../../gateways/episodesGateway";
 
-export class GetAllEpisodesBySerieIdUC {
-  constructor(private episodesGateway: EpisodesGateway) {}
+export class GetAllEpisodesBySeriesIdUC {
+  constructor(private episodesGateway: EpisodesGateway) { }
 
   public async execute(
-    input: GetAllEpisodesBySerieIdInput
-  ): Promise<GetAllEpisodesBySerieIdOutput> {
-    const episodes = await this.episodesGateway.getAllEpisodesBySerieId(
+    input: GetAllEpisodesBySeriesIdInput
+  ): Promise<GetAllEpisodesBySeriesIdOutput> {
+    const episodes = await this.episodesGateway.getAllEpisodesBySeriesId(
       input.series_id
     );
     return {
@@ -28,15 +28,15 @@ export class GetAllEpisodesBySerieIdUC {
   }
 }
 
-export interface GetAllEpisodesBySerieIdInput {
+export interface GetAllEpisodesBySeriesIdInput {
   series_id: string;
 }
 
-export interface GetAllEpisodesBySerieIdOutput {
-  episodes: GetAllEpisodesBySerieIdOutputEpisode[];
+export interface GetAllEpisodesBySeriesIdOutput {
+  episodes: GetAllEpisodesBySeriesIdOutputEpisode[];
 }
 
-export interface GetAllEpisodesBySerieIdOutputEpisode {
+export interface GetAllEpisodesBySeriesIdOutputEpisode {
   id: string;
   title: string;
   picture: string;
