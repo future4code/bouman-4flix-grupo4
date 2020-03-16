@@ -10,7 +10,7 @@ export class SearchMoviesAndSeriesUC {
   public async execute(input: searchUCInput): Promise<searchUCOutput> {
     const query = input.query
 
-    if (query.length > 0) {
+    if (query) {
       const movies = await this.moviesGateway.searchMovies(query)
       const series = await this.seriesGateway.searchSeries(query)
 
@@ -18,7 +18,7 @@ export class SearchMoviesAndSeriesUC {
       const seriesList = series?.map(series => ({...series, type: "series"}))
 
       return {
-        message: [seriesList, moviesList]
+        message: [{series: seriesList}, {movies: moviesList}]
         // OBSERVAÇÃO: Não deu pra testar porque eu não conseguia mais me conectar com o banco.
         // Erro: "connect ECONNREFUSED 18.229.236.15:3306"
       }
