@@ -1,11 +1,9 @@
 import { BaseDB } from "./baseDB";
 import { Series } from "../business/entities/series";
-import { Episode } from "../business/entities/episode";
 import { SeriesGateway } from "../business/gateways/seriesGateway";
 
 export class SeriesDB extends BaseDB implements SeriesGateway {
   private seriesTableName = "SERIES_TABLE";
-  
 
   private mapDateToDbDate(input: Date): string {
     const year = input.getFullYear();
@@ -56,13 +54,21 @@ export class SeriesDB extends BaseDB implements SeriesGateway {
     await this.connection.raw(query);
   }
 
-
-
-  public async getSeriesById(id:string): Promise<Series | undefined>{
+  public async getSeriesById(id: string): Promise<Series | undefined> {
     const result = await this.connection.raw(`
       SELECT * FROM ${this.seriesTableName} WHERE id='${id}'
     `)
-
     return this.mapDbSeriesToSeries(result[0][0])
   }
+
+  public async searchSeries(query: string): Promise<Series[] | undefined> {
+    const result = await this.connection.raw(`
+      SELECT * FROM ${this.seriesTableName}
+      WHERE title LIKE '%${query}%'
+      OR synopsis LIKE '%${query}%';
+    `)
+
+    return result[0];
+  }
+
 }

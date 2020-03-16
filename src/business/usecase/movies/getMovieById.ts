@@ -1,5 +1,4 @@
 import { MoviesGateway } from "../../gateways/moviesGateway";
-import { Movie } from "../../entities/movie";
 
 export class GetMovieByIdUC {
   constructor(private moviesGateway: MoviesGateway) { }

@@ -4,7 +4,6 @@ import { v4 } from "uuid";
 import { Series } from "../../entities/series";
 import { Episode } from "../../entities/episode";
 
-
 export class CreateSeriesUC {
   constructor(
     private seriesGateway: SeriesGateway,
@@ -26,8 +25,8 @@ export class CreateSeriesUC {
     )
 
     await this.seriesGateway.createSeries(series)
-    // DÚVIDA: Esse método tem de ser invocado antes do método createEpisode(), da linha 42,
-    // para criar a série, que tem o id que será referenciado pela foreign key dos episódios.
+    // DÚVIDA: Esse método tem de ser invocado antes do método createEpisode(), da linha 42, para
+    // criar primeiro a série, que terá o id que será referenciado pela foreign key dos episódios.
     // Isso confere? O endpoint só funcionou depois que eu fiz essa troca de posições.
 
     for (let ep of input.episodes) {

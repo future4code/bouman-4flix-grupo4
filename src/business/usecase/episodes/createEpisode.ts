@@ -1,3 +1,5 @@
+// Este usecase não está sendo utilizado.
+
 import { EpisodesGateway } from "../../gateways/episodesGateway";
 import { v4 } from "uuid";
 import { Episode } from "../../entities/episode";
