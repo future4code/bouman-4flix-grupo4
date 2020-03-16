@@ -1,7 +1,6 @@
 import { BaseDB } from "./baseDB";
 import { Movie } from "../business/entities/movie";
 import { MoviesGateway } from "../business/gateways/moviesGateway";
-import { searchUCInput } from "../business/usecase/searchMoviesOrSeries";
 
 export class MovieDB extends BaseDB implements MoviesGateway {
   private movieTableName = "MOVIES_TABLE";
@@ -36,8 +35,8 @@ export class MovieDB extends BaseDB implements MoviesGateway {
     let query = movie.getPicture()
       ? `
         INSERT INTO ${
-          this.movieTableName
-        } (id, title, date, length, synopsis, link, picture)
+      this.movieTableName
+      } (id, title, date, length, synopsis, link, picture)
         VALUES(
         '${movie.getId()}',
         '${movie.getTitle()}',
@@ -49,8 +48,8 @@ export class MovieDB extends BaseDB implements MoviesGateway {
         );`
       : `
         INSERT INTO ${
-          this.movieTableName
-        } (id, title, date, length, synopsis, link)
+      this.movieTableName
+      } (id, title, date, length, synopsis, link)
         VALUES(
             '${movie.getId()}',
             '${movie.getTitle()}',
@@ -63,20 +62,20 @@ export class MovieDB extends BaseDB implements MoviesGateway {
     await this.connection.raw(query);
   }
 
-  public async getMovieById(id: string): Promise<Movie | undefined>{
+  public async getMovieById(id: string): Promise<Movie | undefined> {
     const result = await this.connection.raw(`
       SELECT * FROM ${this.movieTableName} WHERE id='${id}'
     `)
     return this.mapDbMovieToMovie(result[0][0])
   }
 
-  public async searchMovie(input: searchUCInput): Promise<Movie | undefined> {
+  public async searchMovies(query: string): Promise<Movie[] | undefined> {
     const result = await this.connection.raw(`
       SELECT * FROM ${this.movieTableName}
-      WHERE title LIKE '%${input.query}%'
-      OR synopsis LIKE '%${input.query}%';
+      WHERE title LIKE '%${query}%'
+      OR synopsis LIKE '%${query}%';
     `)
 
-    return result[0][0]
+    return result[0];
   }
 }

@@ -1,11 +1,9 @@
 import { BaseDB } from "./baseDB";
 import { Series } from "../business/entities/series";
 import { SeriesGateway } from "../business/gateways/seriesGateway";
-import { searchUCInput } from "../business/usecase/searchMoviesOrSeries";
 
 export class SeriesDB extends BaseDB implements SeriesGateway {
   private seriesTableName = "SERIES_TABLE";
-
 
   private mapDateToDbDate(input: Date): string {
     const year = input.getFullYear();
@@ -60,18 +58,17 @@ export class SeriesDB extends BaseDB implements SeriesGateway {
     const result = await this.connection.raw(`
       SELECT * FROM ${this.seriesTableName} WHERE id='${id}'
     `)
-
     return this.mapDbSeriesToSeries(result[0][0])
   }
 
-  public async searchSeries(input: searchUCInput): Promise<Series | undefined> {
+  public async searchSeries(query: string): Promise<Series[] | undefined> {
     const result = await this.connection.raw(`
       SELECT * FROM ${this.seriesTableName}
-      WHERE title LIKE '%${input.query}%'
-      OR synopsis LIKE '%${input.query}%';
+      WHERE title LIKE '%${query}%'
+      OR synopsis LIKE '%${query}%';
     `)
 
-    return result[0][0]
+    return result[0];
   }
 
 }
